@@ -1,0 +1,23 @@
+{
+  "name": "witraze",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gallery.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JacekBialoskorski/jabi-pl.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JacekBialoskorski/jabi-pl/issues"
+  },
+  "homepage": "https://github.com/JacekBialoskorski/jabi-pl#readme",
+  "dependencies": {
+    "autoprefixer": "^10.4.14",
+    "postcss-cli": "^10.1.0"
+  }
+}
