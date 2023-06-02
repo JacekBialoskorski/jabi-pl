@@ -403,7 +403,7 @@ a.shown {
 /* ----------------------------- ----------------------------- ------------ 
 																	MEDIA 
 ----------------------------- ----------------------------- ---------------- */
-@media (max-width: 1000px) and (orientation: landscape) {
+@media (max-width: 900px) and (orientation: landscape) {
 	body {
 		max-width: 99%;
 		max-height: 99%;
@@ -421,7 +421,7 @@ a.shown {
 		transform: translateX(-40vw);
 	}
 	.header {
-		font-size: clamp(4vh, 7vh, 8vh);
+		font-size: clamp(4vh, 5vh, 6vh);
 	}
 	.footer {
 		display: inline-flex;
@@ -435,9 +435,9 @@ a.shown {
 		width: 25%;
 	}
 	.footer i {
-		max-width: 8vh;
-		max-height: 8vh;
-		font-size: 5vh;
+		max-width: 6vh;
+		max-height: 6vh;
+		font-size: 3vh;
 		padding: 1.5vh;
 		margin: auto;
 	}
@@ -446,18 +446,18 @@ a.shown {
 		margin: 0 auto;
 	}
 	.footer li {
-		font-size: 12px;
+		font-size: 1.5vw;
 		padding: 0 1em;
 	}
 	.contentEl h2 {
-		margin-top: 0.8rem;
-		font-size: 1.2rem;
+		margin-top: 1vh;
+		font-size: 3vw;
 	}
 	.contentEl p {
-		font-size: 0.8rem;
+		font-size: 2.2vw;
 	}
 	.seeOnMap h2 {
-		font-size: 0.8rem;
+		font-size: 2vw;
 	}
 	.seeOnMap iframe {
 		border-width: 5px;
@@ -468,7 +468,7 @@ a.shown {
 		letter-spacing: 0;
 	}
 	.contentContact h2 {
-		font-size: 0.8rem;
+		font-size: 2vw;
 	}
 	.contentContact iframe {
 		border-width: 5px;
@@ -558,7 +558,7 @@ a.shown {
 }
 /* ----------------------------------------------------- */
 
-@media (max-width: 768px) and (orientation: portrait) {
+@media (max-width: 800px) and (orientation: portrait) {
 	body {
 		max-width: 99%;
 		max-height: 99%;
@@ -580,7 +580,7 @@ a.shown {
 		grid-template-rows: 15vh 65vh 15vh;
 	}
 	.header {
-		font-size: clamp(4vw, 7vh, 8vw);
+		font-size: clamp(4vw, 5vh, 6vw);
 	}
 	.footer {
 		grid-row: -2/-1;
@@ -591,11 +591,10 @@ a.shown {
 		width: 49%;
 	}
 	.footer i {
-		width: 8vw;
-		height: 8vw;
-		font-size: clamp(12px, 0.9rem, 16px);
-		padding: 4%;
-		margin-left: 25%;
+		width: 6vw;
+		height: 6vw;
+		font-size: clamp(15px, 3vw, 20px);
+		padding: 8%;
 	}
 	.footer ul {
 		display: flex;
@@ -637,14 +636,14 @@ a.shown {
 	}
 	.contentEl h2 {
 		grid-area: h2;
-		font-size: 16px;
+		font-size: 5vw;
 	}
 	.contentEl p {
 		grid-area: p;
-		font-size: 12px;
+		font-size: 3.5vw;
 	}
 	.seeOnMap h2 {
-		font-size: 17px;
+		font-size: 4vw;
 		margin: auto;
 	}
 	.seeOnMap iframe {
@@ -666,7 +665,8 @@ a.shown {
 	}
 	.contentContact h2 {
 		grid-area: contact-h2;
-		font-size: 20px;
+		font-size: 6vw;
+		margin-left: 1.5vw;
 	}
 	.contentContact iframe {
 		grid-area: contact-iframe;
