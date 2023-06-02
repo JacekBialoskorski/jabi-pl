@@ -1,14 +1,11 @@
 // required to run:
-// npx postcss --use autoprefixer --autoprefixer.browsers "Firefox" -o style.css styleOrigin.css
+// npx postcss -o style.css styleOrigin.css
 
 module.exports = {
-    plugins: [
-      require('autoprefixer')({
-        overrideBrowserslist: [
-          "last 2 versions",
-          "not dead",
-          "not ie <= 11"
-        ]
-      })
-    ]
-  }
+  plugins: [
+    require('autoprefixer')({
+      overrideBrowserslist: ['> 2%'],
+      cascade: false
+    })
+  ]
+};
