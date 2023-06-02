@@ -1,7 +1,7 @@
 {
   "name": "witraze",
   "version": "1.0.0",
-  "description": "",
+  "description": "Witraże realizuję we wszelkich technologiach, używając znakomitych szkieł z hut takich jak Lamberts, Uroboros, Youghiogheny, Bullseye, Wissmach, Spectrum",
   "main": "gallery.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/JacekBialoskorski/jabi-pl.git"
   },
-  "author": "",
+  "author": "Agata Białoskórska",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/JacekBialoskorski/jabi-pl/issues"
