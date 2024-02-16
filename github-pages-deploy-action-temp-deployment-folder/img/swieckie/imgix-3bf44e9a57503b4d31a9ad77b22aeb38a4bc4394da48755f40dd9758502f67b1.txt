@@ -1,2 +1,0 @@
-6c8fe1accebb423c23d06a4e5171c206c07f78de4db789be553a721036dded63
-This file was created to test the upload permissions of the authorization credentials created for your imgix account. It can be safely deleted at any time.
