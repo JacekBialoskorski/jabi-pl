@@ -4,7 +4,8 @@
   "description": "Witraże realizuję we wszelkich technologiach, używając znakomitych szkieł z hut takich jak Lamberts, Uroboros, Youghiogheny, Bullseye, Wissmach, Spectrum",
   "main": "gallery.js",
   "scripts": {
-    "test": "playwright test"
+    "test": "playwright test",
+    "optimize-images": "node scripts/optimize-images.js"
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,7 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.61.0",
-    "serve": "^14.2.6"
+    "serve": "^14.2.6",
+    "sharp": "^0.35.1"
   }
 }

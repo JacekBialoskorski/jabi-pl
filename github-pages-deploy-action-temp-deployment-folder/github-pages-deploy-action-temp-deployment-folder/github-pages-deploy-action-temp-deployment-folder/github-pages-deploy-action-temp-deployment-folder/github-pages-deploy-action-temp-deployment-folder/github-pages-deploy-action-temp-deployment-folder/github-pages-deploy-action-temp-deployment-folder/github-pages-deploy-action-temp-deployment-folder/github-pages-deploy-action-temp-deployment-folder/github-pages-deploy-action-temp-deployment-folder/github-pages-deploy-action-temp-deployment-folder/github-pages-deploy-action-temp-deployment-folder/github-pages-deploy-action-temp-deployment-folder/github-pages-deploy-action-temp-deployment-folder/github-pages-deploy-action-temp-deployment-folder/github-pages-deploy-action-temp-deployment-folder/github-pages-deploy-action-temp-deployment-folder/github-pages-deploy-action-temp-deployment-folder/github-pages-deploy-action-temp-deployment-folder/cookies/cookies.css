@@ -1,0 +1,38 @@
+.cookie-alert {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: var(--mainTextCr);
+	color: var(--buttonsCr);
+	font-size: medium;
+	padding: 10px;
+	text-align: center;
+	z-index: 9;
+}
+
+.cookie-accept-button {
+	background-color: var(--buttonsCr);
+	color: var(--mainTextCr);
+	width: 100px;
+	border: none;
+	border-radius: 10px;
+	padding: 10px;
+	margin-left: 10px;
+	cursor: pointer;
+}
+.cookie-accept-button:hover {
+	background-color: transparent;
+	border: solid 1px var(--buttonsCr);
+	color: var(--buttonsCr);
+}
+
+.cookie-alert a:link,
+.cookie-alert a:active,
+.cookie-alert a:visited {
+	color: var(--buttonsCr);
+	font-style: italic;
+}
+.cookie-alert a:hover {
+	text-decoration: underline;
+}
