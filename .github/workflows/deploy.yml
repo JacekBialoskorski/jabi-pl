@@ -16,6 +16,9 @@ jobs:
         with:
           ref: master
 
+      - name: Remove full-resolution gallery masters
+        run: rm -rf img/originals
+
       - name: Build and Deploy
         uses: JamesIves/github-pages-deploy-action@v4.4.1
         with:
