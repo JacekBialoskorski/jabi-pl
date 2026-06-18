@@ -1,8 +1,3 @@
-// ------------------------------------------------------- stałe globalne
-const SACRAL = 139
-const SECULAR = 165
-const BOTH = SACRAL + SECULAR
-
 // ------------------------------------------------------- pobieranie danych
 const imgBox = document.querySelector('.imgBox')
 const secularBtn = document.querySelector('.secularBtn')
@@ -33,24 +28,20 @@ const shuffleArray = array => {
 
 // ------------------------------------------------------- zmieszanie tablicy świeckich i sakralnych ze ścieżkami i altami
 const createArraySecular = () => {
-	const numbers = Array.from({ length: SECULAR }, (_, i) => i + 1)
-	const shuffledNumbers = shuffleArray(numbers)
-	const secular = shuffledNumbers.map(number => ({
-		thumbPath: `./img/swieckie/thumb/swieckie${number}.webp`,
-		fullPath: `./img/swieckie/full/swieckie${number}.webp`,
-		alt: `swieckie${number}`,
+	const shuffledNames = shuffleArray([...GALLERY_MANIFEST.swieckie])
+	return shuffledNames.map(name => ({
+		thumbPath: `./img/swieckie/thumb/${name}.webp`,
+		fullPath: `./img/swieckie/full/${name}.webp`,
+		alt: name,
 	}))
-	return secular
 }
 const createArraySacral = () => {
-	const numbers = Array.from({ length: SACRAL }, (_, i) => i + 1)
-	const shuffledNumbers = shuffleArray(numbers)
-	const sacral = shuffledNumbers.map(number => ({
-		thumbPath: `./img/sakralne/thumb/sakralne${number}.webp`,
-		fullPath: `./img/sakralne/full/sakralne${number}.webp`,
-		alt: `sakralne${number}`,
+	const shuffledNames = shuffleArray([...GALLERY_MANIFEST.sakralne])
+	return shuffledNames.map(name => ({
+		thumbPath: `./img/sakralne/thumb/${name}.webp`,
+		fullPath: `./img/sakralne/full/${name}.webp`,
+		alt: name,
 	}))
-	return sacral
 }
 const shuffleBothArrays = () => {
 	const secularArr = createArraySecular()
@@ -87,11 +78,11 @@ const displaySacral = () => {
 	})
 }
 const displayBothArrays = () => {
-	const shuffledSecular = shuffleBothArrays()
+	const shuffledBoth = shuffleBothArrays()
 	imgBox.innerHTML = ''
-	for (let i = 0; i < BOTH; i++) {
-		imgBox.appendChild(createImgEl(shuffledSecular[i]))
-	}
+	shuffledBoth.forEach(item => {
+		imgBox.appendChild(createImgEl(item))
+	})
 }
 // ------------------------------------------------------- wywoływanie galerii
 displayBothArrays()
