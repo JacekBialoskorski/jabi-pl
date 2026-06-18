@@ -163,12 +163,18 @@ const createPopup = (imgUrl, imgAlt) => {
 	// 	  clearTimeout(debounceTimeout);
 	// 	}, 50);
 	//   });
-	closeBtn.addEventListener('click', () => {
+	const closePopup = () => {
 		popup.style.opacity = '0'
 		setTimeout(() => {
 			document.body.removeChild(popup)
 			popup = null
 		}, 250)
+	}
+	closeBtn.addEventListener('click', closePopup)
+	popup.addEventListener('click', event => {
+		if (event.target === popup) {
+			closePopup()
+		}
 	})
 	prevBtn.addEventListener('click', () => {
 		const prevImg = getPrevImg(imgUrl)
