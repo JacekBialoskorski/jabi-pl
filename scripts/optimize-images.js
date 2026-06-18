@@ -34,11 +34,22 @@ const processImage = async (srcPath, destDir, variant) => {
 		.toFile(destPath)
 }
 
+const pruneOrphans = (destDir, currentNames) => {
+	const keep = new Set(currentNames.map(name => `${name}.webp`))
+	for (const file of fs.readdirSync(destDir)) {
+		if (!keep.has(file)) {
+			fs.unlinkSync(path.join(destDir, file))
+			console.log(`removed orphan ${path.relative(IMG_ROOT, path.join(destDir, file))}`)
+		}
+	}
+}
+
 const processCategory = async category => {
 	const sourceDir = path.join(IMG_ROOT, 'originals', category)
 	const files = fs
 		.readdirSync(sourceDir)
 		.filter(file => /\.(jpe?g|png)$/i.test(file))
+	const names = files.map(file => path.parse(file).name).sort()
 
 	for (const [variantName, variant] of Object.entries(VARIANTS)) {
 		const destDir = path.join(IMG_ROOT, category, variantName)
@@ -46,10 +57,11 @@ const processCategory = async category => {
 		for (const file of files) {
 			await processImage(path.join(sourceDir, file), destDir, variant)
 		}
+		pruneOrphans(destDir, names)
 		console.log(`${category}/${variantName}: ${files.length} images`)
 	}
 
-	return files.map(file => path.parse(file).name).sort()
+	return names
 }
 
 const writeManifest = manifest => {
