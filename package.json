@@ -2,7 +2,6 @@
   "name": "witraze",
   "version": "1.0.0",
   "description": "Witraże realizuję we wszelkich technologiach, używając znakomitych szkieł z hut takich jak Lamberts, Uroboros, Youghiogheny, Bullseye, Wissmach, Spectrum",
-  "main": "gallery.js",
   "scripts": {
     "test": "playwright test",
     "optimize-images": "node scripts/optimize-images.js"
