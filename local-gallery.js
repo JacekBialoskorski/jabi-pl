@@ -4,6 +4,7 @@ const secularBtn = document.querySelector('.secularBtn')
 const sacralBtn = document.querySelector('.sacralBtn')
 const allBtn = document.querySelector('.allBtn')
 let popup = null
+let popupKeyDownHandler = null
 let currentImgUrl = ''
 let debounceTimeout
 let canPressKey = true
@@ -143,52 +144,55 @@ const createPopup = (imgUrl, imgAlt) => {
 		popup.style.opacity = '1'
 		popup.style.transition = 'opacity, ease-out 0.7s '
 	}, 100)
-	// document.addEventListener('keydown', (e) => {
-	// 	clearTimeout(debounceTimeout);	  
-	// 	if (e.key === 'ArrowLeft') {
-	// 	  const prevImg = getPrevImg(imgUrl);
-	// 	  checkExistPopup(prevImg.src, prevImg.alt);
-	// 	  clearTimeout(debounceTimeout);
-	// 	} else if (e.key === 'ArrowRight') {
-	// 	  const nextImg = getNextImg(imgUrl);
-	// 	  checkExistPopup(nextImg.src, nextImg.alt);
-	// 	  clearTimeout(debounceTimeout);
-	// 	} else if (e.key === 'Escape') {
-	// 	  document.body.removeChild(popup);
-	// 	  popup = null;
-	// 	  clearTimeout(debounceTimeout);
-	// 	}
-	// 	// Set a debounce timeout to prevent immediate subsequent key presses
-	// 	debounceTimeout = setTimeout(() => {
-	// 	  clearTimeout(debounceTimeout);
-	// 	}, 50);
-	//   });
-	closeBtn.addEventListener('click', () => {
+	const closePopup = () => {
+		document.removeEventListener('keydown', popupKeyDownHandler)
+		popupKeyDownHandler = null
 		popup.style.opacity = '0'
 		setTimeout(() => {
 			document.body.removeChild(popup)
 			popup = null
 		}, 250)
-	})
-	prevBtn.addEventListener('click', () => {
+	}
+	const goToPrev = () => {
 		const prevImg = getPrevImg(imgUrl)
 		if (prevImg) {
 			checkExistPopup(prevImg.src, prevImg.alt)
 		} else {
 			prevBtn.style.cursor = 'not-allowed'
 		}
-	})
-	nextBtn.addEventListener('click', () => {
+	}
+	const goToNext = () => {
 		const nextImg = getNextImg(imgUrl)
 		if (nextImg) {
 			checkExistPopup(nextImg.src, nextImg.alt)
 		} else {
 			nextBtn.style.cursor = 'not-allowed'
 		}
+	}
+	const onKeyDown = e => {
+		if (e.key === 'ArrowLeft') {
+			goToPrev()
+		} else if (e.key === 'ArrowRight') {
+			goToNext()
+		} else if (e.key === 'Escape') {
+			closePopup()
+		}
+	}
+	popupKeyDownHandler = onKeyDown
+	document.addEventListener('keydown', popupKeyDownHandler)
+	closeBtn.addEventListener('click', closePopup)
+	popup.addEventListener('click', event => {
+		if (event.target === popup) {
+			closePopup()
+		}
 	})
+	prevBtn.addEventListener('click', goToPrev)
+	nextBtn.addEventListener('click', goToNext)
 }
 const checkExistPopup = (imgUrl, imgAlt) => {
 	if (popup) {
+		document.removeEventListener('keydown', popupKeyDownHandler)
+		popupKeyDownHandler = null
 		document.body.removeChild(popup)
 		createPopup(imgUrl, imgAlt)
 	} else {
