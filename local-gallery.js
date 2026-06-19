@@ -4,6 +4,10 @@ const secularBtn = document.querySelector('.secularBtn')
 const sacralBtn = document.querySelector('.sacralBtn')
 const allBtn = document.querySelector('.allBtn')
 let popup = null
+let popupImg = null
+let popupNameImg = null
+let popupPrevBtn = null
+let popupNextBtn = null
 let popupKeyDownHandler = null
 let currentImgUrl = ''
 let debounceTimeout
@@ -114,6 +118,7 @@ allBtn.addEventListener('click', event => {
 powiekszanie obrazka po kliku - popup
 ---------------------------------------------------------- */
 const createPopup = (imgUrl, imgAlt) => {
+	currentImgUrl = imgUrl
 	popup = document.createElement('div')
 	popup.className = 'popup'
 	popup.style.opacity = '0'
@@ -140,6 +145,11 @@ const createPopup = (imgUrl, imgAlt) => {
 	popup.appendChild(nameImg)
 	document.body.appendChild(popup)
 
+	popupImg = img
+	popupNameImg = nameImg
+	popupPrevBtn = prevBtn
+	popupNextBtn = nextBtn
+
 	setTimeout(() => {
 		popup.style.opacity = '1'
 		popup.style.transition = 'opacity, ease-out 0.7s '
@@ -151,20 +161,24 @@ const createPopup = (imgUrl, imgAlt) => {
 		setTimeout(() => {
 			document.body.removeChild(popup)
 			popup = null
+			popupImg = null
+			popupNameImg = null
+			popupPrevBtn = null
+			popupNextBtn = null
 		}, 250)
 	}
 	const goToPrev = () => {
-		const prevImg = getPrevImg(imgUrl)
+		const prevImg = getPrevImg(currentImgUrl)
 		if (prevImg) {
-			checkExistPopup(prevImg.src, prevImg.alt)
+			updatePopupImage(prevImg.src, prevImg.alt)
 		} else {
 			prevBtn.style.cursor = 'not-allowed'
 		}
 	}
 	const goToNext = () => {
-		const nextImg = getNextImg(imgUrl)
+		const nextImg = getNextImg(currentImgUrl)
 		if (nextImg) {
-			checkExistPopup(nextImg.src, nextImg.alt)
+			updatePopupImage(nextImg.src, nextImg.alt)
 		} else {
 			nextBtn.style.cursor = 'not-allowed'
 		}
@@ -189,12 +203,17 @@ const createPopup = (imgUrl, imgAlt) => {
 	prevBtn.addEventListener('click', goToPrev)
 	nextBtn.addEventListener('click', goToNext)
 }
+const updatePopupImage = (imgUrl, imgAlt) => {
+	currentImgUrl = imgUrl
+	popupImg.src = imgUrl
+	popupImg.alt = imgAlt
+	popupNameImg.innerHTML = imgAlt
+	popupPrevBtn.style.cursor = ''
+	popupNextBtn.style.cursor = ''
+}
 const checkExistPopup = (imgUrl, imgAlt) => {
 	if (popup) {
-		document.removeEventListener('keydown', popupKeyDownHandler)
-		popupKeyDownHandler = null
-		document.body.removeChild(popup)
-		createPopup(imgUrl, imgAlt)
+		updatePopupImage(imgUrl, imgAlt)
 	} else {
 		createPopup(imgUrl, imgAlt)
 	}
