@@ -202,6 +202,23 @@ const createPopup = (imgUrl, imgAlt) => {
 	})
 	prevBtn.addEventListener('click', goToPrev)
 	nextBtn.addEventListener('click', goToNext)
+
+	let touchStartX = 0
+	let touchStartY = 0
+	const swipeThreshold = 50
+	const onTouchStart = e => {
+		touchStartX = e.changedTouches[0].screenX
+		touchStartY = e.changedTouches[0].screenY
+	}
+	const onTouchEnd = e => {
+		const deltaX = e.changedTouches[0].screenX - touchStartX
+		const deltaY = e.changedTouches[0].screenY - touchStartY
+		if (Math.abs(deltaX) > swipeThreshold && Math.abs(deltaX) > Math.abs(deltaY)) {
+			deltaX < 0 ? goToNext() : goToPrev()
+		}
+	}
+	img.addEventListener('touchstart', onTouchStart)
+	img.addEventListener('touchend', onTouchEnd)
 }
 const updatePopupImage = (imgUrl, imgAlt) => {
 	currentImgUrl = imgUrl
