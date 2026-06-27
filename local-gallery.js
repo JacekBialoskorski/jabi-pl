@@ -169,19 +169,11 @@ const createPopup = (imgUrl, imgAlt) => {
 	}
 	const goToPrev = () => {
 		const prevImg = getPrevImg(currentImgUrl)
-		if (prevImg) {
-			updatePopupImage(prevImg.src, prevImg.alt)
-		} else {
-			prevBtn.style.cursor = 'not-allowed'
-		}
+		if (prevImg) updatePopupImage(prevImg.src, prevImg.alt)
 	}
 	const goToNext = () => {
 		const nextImg = getNextImg(currentImgUrl)
-		if (nextImg) {
-			updatePopupImage(nextImg.src, nextImg.alt)
-		} else {
-			nextBtn.style.cursor = 'not-allowed'
-		}
+		if (nextImg) updatePopupImage(nextImg.src, nextImg.alt)
 	}
 	const onKeyDown = e => {
 		if (e.key === 'ArrowLeft') {
@@ -225,8 +217,6 @@ const updatePopupImage = (imgUrl, imgAlt) => {
 	popupImg.src = imgUrl
 	popupImg.alt = imgAlt
 	popupNameImg.innerHTML = imgAlt
-	popupPrevBtn.style.cursor = ''
-	popupNextBtn.style.cursor = ''
 }
 const checkExistPopup = (imgUrl, imgAlt) => {
 	if (popup) {
@@ -236,28 +226,14 @@ const checkExistPopup = (imgUrl, imgAlt) => {
 	}
 }
 const getPrevImg = currentImgUrl => {
-	const imgIndex = Array.from(imgBox.querySelectorAll('.randomImg')).findIndex(
-		img => img.dataset.fullSrc === currentImgUrl
-	)
-	if (imgIndex > 0) {
-		const prevImg = imgBox.querySelectorAll('.randomImg')[imgIndex - 1]
-		return {
-			src: prevImg.dataset.fullSrc,
-			alt: prevImg.getAttribute('alt'),
-		}
-	}
-	return null
+	const imgs = imgBox.querySelectorAll('.randomImg')
+	const imgIndex = Array.from(imgs).findIndex(img => img.dataset.fullSrc === currentImgUrl)
+	const prevImg = imgs[(imgIndex - 1 + imgs.length) % imgs.length]
+	return { src: prevImg.dataset.fullSrc, alt: prevImg.getAttribute('alt') }
 }
 const getNextImg = currentImgUrl => {
-	const imgIndex = Array.from(imgBox.querySelectorAll('.randomImg')).findIndex(
-		img => img.dataset.fullSrc === currentImgUrl
-	)
-	if (imgIndex < imgBox.querySelectorAll('.randomImg').length - 1) {
-		const nextImg = imgBox.querySelectorAll('.randomImg')[imgIndex + 1]
-		return {
-			src: nextImg.dataset.fullSrc,
-			alt: nextImg.getAttribute('alt'),
-		}
-	}
-	return null
+	const imgs = imgBox.querySelectorAll('.randomImg')
+	const imgIndex = Array.from(imgs).findIndex(img => img.dataset.fullSrc === currentImgUrl)
+	const nextImg = imgs[(imgIndex + 1) % imgs.length]
+	return { src: nextImg.dataset.fullSrc, alt: nextImg.getAttribute('alt') }
 }
