@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="Agata Bialoskorska">
+    <script src="https://kit.fontawesome.com/37a8b7fe0b.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./cookies/cookies.css">
+    <title>Pracownia Witraży Jacek Białoskórski</title>
+</head>
+
+<body>
+    <nav>
+        <button class="navBtns">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-times hide"></i>
+        </button>
+        <ul>
+            <li><a href="./">Strona Główna</a></li>
+            <li><a href="./gallery.html">Galeria</a></li>
+            <li><a href="./seeOnMap.html">Zobacz na mapie</a></li>
+            <li><a href="./contact.html">Kontakt</a></li>
+            <li><a class="media mail" href="mailto:jacek@jabi.pl"><i class="fa-solid fa-envelope"></i></a></li>
+            <li><a class="media fb" href="https://facebook.com/jabikrakow"><i class="fa-brands fa-square-facebook"></i></a></li>
+        </ul>
+    </nav>
+
+    <div id="home" class="general home">
+        <h1 class="header"> <a href="./">Pracownia Witraży<br>Jacek Białoskórski</a></h1>
+
+        <div class="contentHome">
+            <div class="see contentEl">
+                <a class='homeImg seeImg' href="./seeOnMap.html" alt="Zobacz na mapie"></a>
+                <h2>Zobacz</h2>
+                <p>Interaktywna mapka z zaznaczonymi punktami, gdzie można oglądać nasze witraże.</p>
+            </div>
+            <div class="gallery contentEl">
+                <a class='homeImg galleryImg' href="./gallery.html" alt="Galeria"></a>
+                <h2>Galeria</h2>
+                <p>Prezentacja prac świeckich oraz sakralnych.</p>
+            </div>
+            <div class="contact contentEl">
+                <a class='homeImg contactImg' href="./contact.html" alt="Kontakt"></a>
+                <h2>Kontakt</h2>
+                <p>Dane firmy, mapa dojazdu, informacje teleadresowe.</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <a class="media mail" href="mailto:jacek@jabi.pl"><i class="fa-solid fa-at"></i></a>
+            <a class="media fb" href="https://facebook.com/jabikrakow"><i class="fa-brands fa-facebook-f"></i></a>
+            <ul>
+                <li><a href="https://www.jabi.pl">© 2023 Pracownia Witraży Jacek Białoskórski</a></li>
+                <li><a href="https://agatabialoskorska.github.io/my-portfolio">Designed by Agata Białoskórska</a></li>
+                <li><a href="./rodo.html">Polityka Prywatności</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="cookie-alert">
+        Ta strona korzysta z plików <a href="https://www.cloudflare.com/learning/privacy/what-are-cookies/">cookies</a>,
+        aby poprawić komfort użytkowania.
+        <button class="cookie-accept-button" onclick="acceptCookies()">Rozumiem</button>
+    </div>
+    <script src="./menu.js"></script>
+    <script src="./cookies/cookies.js"></script>
+</body>
+
+</html>
