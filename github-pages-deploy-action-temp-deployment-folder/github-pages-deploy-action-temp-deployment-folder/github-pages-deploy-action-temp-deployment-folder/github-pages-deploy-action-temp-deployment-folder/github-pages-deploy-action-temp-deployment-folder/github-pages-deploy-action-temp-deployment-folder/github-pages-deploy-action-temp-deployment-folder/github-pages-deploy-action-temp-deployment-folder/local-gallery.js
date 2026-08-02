@@ -1,8 +1,3 @@
-// ------------------------------------------------------- stałe globalne
-const SACRAL = 139
-const SECULAR = 165
-const BOTH = SACRAL + SECULAR
-
 // ------------------------------------------------------- pobieranie danych
 const imgBox = document.querySelector('.imgBox')
 const secularBtn = document.querySelector('.secularBtn')
@@ -33,22 +28,20 @@ const shuffleArray = array => {
 
 // ------------------------------------------------------- zmieszanie tablicy świeckich i sakralnych ze ścieżkami i altami
 const createArraySecular = () => {
-	const numbers = Array.from({ length: SECULAR }, (_, i) => i + 1)
-	const shuffledNumbers = shuffleArray(numbers)
-	const secular = shuffledNumbers.map(number => ({
-		imgPath: `./img/swieckie/swieckie${number}.jpg`,
-		alt: `swieckie${number}.jpg`,
+	const shuffledNames = shuffleArray([...GALLERY_MANIFEST.swieckie])
+	return shuffledNames.map(name => ({
+		thumbPath: `./img/swieckie/thumb/${name}.webp`,
+		fullPath: `./img/swieckie/full/${name}.webp`,
+		alt: name,
 	}))
-	return secular
 }
 const createArraySacral = () => {
-	const numbers = Array.from({ length: SACRAL }, (_, i) => i + 1)
-	const shuffledNumbers = shuffleArray(numbers)
-	const sacral = shuffledNumbers.map(number => ({
-		imgPath: `./img/sakralne/sakralne${number}.jpg`,
-		alt: `sakralne${number}.jpg`,
+	const shuffledNames = shuffleArray([...GALLERY_MANIFEST.sakralne])
+	return shuffledNames.map(name => ({
+		thumbPath: `./img/sakralne/thumb/${name}.webp`,
+		fullPath: `./img/sakralne/full/${name}.webp`,
+		alt: name,
 	}))
-	return sacral
 }
 const shuffleBothArrays = () => {
 	const secularArr = createArraySecular()
@@ -59,47 +52,37 @@ const shuffleBothArrays = () => {
 	return shuffledArrays
 }
 // ------------------------------------------------------- wyświetlanie obrazków wg tablic zmieszanych powyżej
+const createImgEl = ({ thumbPath, fullPath, alt }) => {
+	const img = document.createElement('img')
+	img.classList.add('randomImg')
+	img.loading = 'lazy'
+	Object.assign(img, { src: thumbPath, alt })
+	img.dataset.fullSrc = fullPath
+	img.addEventListener('click', () => {
+		checkExistPopup(fullPath, alt)
+	})
+	return img
+}
 const displaySecular = () => {
 	const shuffledSecular = createArraySecular()
 	imgBox.innerHTML = ''
-	shuffledSecular.forEach(({ imgPath, alt }) => {
-		const img = document.createElement('img')
-		img.classList.add('randomImg')
-		imgBox.appendChild(img)
-		Object.assign(img, { src: imgPath, alt })
-		img.addEventListener('click', () => {
-			checkExistPopup(imgPath, alt)
-		})
+	shuffledSecular.forEach(item => {
+		imgBox.appendChild(createImgEl(item))
 	})
 }
 const displaySacral = () => {
 	const shuffledSacral = createArraySacral()
 	imgBox.innerHTML = ''
-	shuffledSacral.forEach(({ imgPath, alt }) => {
-		const img = document.createElement('img')
-		img.classList.add('randomImg')
-		imgBox.appendChild(img)
-		Object.assign(img, { src: imgPath, alt })
-		img.addEventListener('click', () => {
-			checkExistPopup(imgPath, alt)
-		})
+	shuffledSacral.forEach(item => {
+		imgBox.appendChild(createImgEl(item))
 	})
 }
 const displayBothArrays = () => {
-	const shuffledSecular = shuffleBothArrays()
+	const shuffledBoth = shuffleBothArrays()
 	imgBox.innerHTML = ''
-	for (let i = 0; i < BOTH; i++) {
-		const { imgPath, alt } = shuffledSecular[i]
-		const img = document.createElement('img')
-		img.classList.add('randomImg')
-		img.setAttribute('src', imgPath)
-		img.setAttribute('alt', alt)
-
-		img.addEventListener('click', () => {
-			checkExistPopup(imgPath, alt)
-		})
-		imgBox.appendChild(img)
-	}
+	shuffledBoth.forEach(item => {
+		imgBox.appendChild(createImgEl(item))
+	})
 }
 // ------------------------------------------------------- wywoływanie galerii
 displayBothArrays()
@@ -214,12 +197,12 @@ const checkExistPopup = (imgUrl, imgAlt) => {
 }
 const getPrevImg = currentImgUrl => {
 	const imgIndex = Array.from(imgBox.querySelectorAll('.randomImg')).findIndex(
-		img => img.getAttribute('src') === currentImgUrl
+		img => img.dataset.fullSrc === currentImgUrl
 	)
 	if (imgIndex > 0) {
 		const prevImg = imgBox.querySelectorAll('.randomImg')[imgIndex - 1]
 		return {
-			src: prevImg.getAttribute('src'),
+			src: prevImg.dataset.fullSrc,
 			alt: prevImg.getAttribute('alt'),
 		}
 	}
@@ -227,12 +210,12 @@ const getPrevImg = currentImgUrl => {
 }
 const getNextImg = currentImgUrl => {
 	const imgIndex = Array.from(imgBox.querySelectorAll('.randomImg')).findIndex(
-		img => img.getAttribute('src') === currentImgUrl
+		img => img.dataset.fullSrc === currentImgUrl
 	)
 	if (imgIndex < imgBox.querySelectorAll('.randomImg').length - 1) {
 		const nextImg = imgBox.querySelectorAll('.randomImg')[imgIndex + 1]
 		return {
-			src: nextImg.getAttribute('src'),
+			src: nextImg.dataset.fullSrc,
 			alt: nextImg.getAttribute('alt'),
 		}
 	}

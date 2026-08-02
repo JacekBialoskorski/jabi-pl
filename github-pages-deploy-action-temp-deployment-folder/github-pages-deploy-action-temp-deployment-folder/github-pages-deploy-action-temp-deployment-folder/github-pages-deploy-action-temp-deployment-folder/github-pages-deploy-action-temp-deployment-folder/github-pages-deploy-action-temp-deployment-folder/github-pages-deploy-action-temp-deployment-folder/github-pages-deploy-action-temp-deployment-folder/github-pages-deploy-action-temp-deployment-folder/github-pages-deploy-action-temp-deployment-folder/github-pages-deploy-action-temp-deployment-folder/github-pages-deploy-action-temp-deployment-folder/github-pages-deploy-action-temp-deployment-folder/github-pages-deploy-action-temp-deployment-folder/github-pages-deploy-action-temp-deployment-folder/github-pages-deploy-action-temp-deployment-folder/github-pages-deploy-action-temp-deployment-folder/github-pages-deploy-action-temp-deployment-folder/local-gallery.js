@@ -1,6 +1,6 @@
 // ------------------------------------------------------- stałe globalne
-const SACRAL = 137
-const SECULAR = 163
+const SACRAL = 139
+const SECULAR = 164
 const BOTH = SACRAL + SECULAR
 
 // ------------------------------------------------------- pobieranie danych
