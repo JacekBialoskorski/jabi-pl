@@ -87,6 +87,32 @@ test('arrow keys navigate the popup and escape closes it', async ({ page }) => {
 	await expect(page.locator('.popup:not(.hide)')).toHaveCount(0)
 })
 
+test('navigating before the first photo loops to the last', async ({ page }) => {
+	await page.goto('/gallery.html')
+	const images = page.locator('.imgBox img.randomImg')
+	await images.first().click()
+
+	const popup = page.locator('.popup:not(.hide)')
+	const popupImg = popup.locator('img')
+	const firstSrc = await popupImg.getAttribute('src')
+
+	await page.keyboard.press('ArrowLeft')
+	await expect(popupImg).not.toHaveAttribute('src', firstSrc)
+})
+
+test('navigating past the last photo loops to the first', async ({ page }) => {
+	await page.goto('/gallery.html')
+	const images = page.locator('.imgBox img.randomImg')
+	await images.last().click()
+
+	const popup = page.locator('.popup:not(.hide)')
+	const popupImg = popup.locator('img')
+	const lastSrc = await popupImg.getAttribute('src')
+
+	await page.keyboard.press('ArrowRight')
+	await expect(popupImg).not.toHaveAttribute('src', lastSrc)
+})
+
 test('swiping left and right navigates the zoomed photo', async ({ page }) => {
 	await page.goto('/gallery.html')
 	const images = page.locator('.imgBox img.randomImg')
