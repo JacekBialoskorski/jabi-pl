@@ -20,7 +20,7 @@ jobs:
         run: rm -rf img/originals
 
       - name: Build and Deploy
-        uses: JamesIves/github-pages-deploy-action@v4.4.1
+        uses: JamesIves/github-pages-deploy-action@v4.8.0
         with:
           branch: gh-pages
           folder: ./
