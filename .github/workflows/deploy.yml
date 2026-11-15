@@ -11,17 +11,37 @@ jobs:
     if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'master'
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout master branch
+      - name: Checkout tested commit
         uses: actions/checkout@v7
         with:
-          ref: master
+          ref: ${{ github.event.workflow_run.head_sha }}
 
-      - name: Remove full-resolution gallery masters
-        run: rm -rf img/originals
+      - name: Assemble site
+        run: |
+          # Allowlist of files published to production. When adding a new page,
+          # script, stylesheet or asset folder, add it here - otherwise it will
+          # not be deployed. The verify step below only catches files referenced
+          # from HTML/CSS with a "./" prefix, not ones loaded from JavaScript.
+          mkdir _site
+          cp -r *.html style.css menu.js local-gallery.js cookies img CNAME robots.txt sitemap.xml _site/
+          # full-resolution gallery masters are not served in production
+          rm -rf _site/img/originals
 
-      - name: Build and Deploy
+      - name: Verify assembled site
+        run: |
+          missing=0
+          for ref in $(grep -ohE "(src|href)=\"\./[^\"#?]+\"" _site/*.html | sed -E 's/^[a-z]+="\.\/(.*)"$/\1/' | sort -u) \
+                     $(grep -ohE "url\('\./[^')]+'\)" _site/style.css _site/cookies/*.css | sed -E "s/^url\('\.\/(.*)'\)$/\1/" | sort -u); do
+            if [ ! -e "_site/$ref" ]; then
+              echo "::error::missing file referenced by the site: $ref"
+              missing=1
+            fi
+          done
+          exit $missing
+
+      - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4.9.0
         with:
           branch: gh-pages
-          folder: ./
+          folder: _site
           token: ${{ secrets.GH_TOKEN }}
