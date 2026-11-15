@@ -15,6 +15,9 @@ jobs:
         uses: actions/checkout@v7
         with:
           ref: ${{ github.event.workflow_run.head_sha }}
+          # checkout's read-only GITHUB_TOKEN would otherwise override GH_TOKEN
+          # when the deploy action pushes to gh-pages
+          persist-credentials: false
 
       - name: Assemble site
         run: |
